@@ -21,7 +21,7 @@ library(plotly)
 library(htmlwidgets)
 
 # Cargar con 'readr' el archivo 'csv'
-df <- read_csv("owid-covid-data.csv")
+df <- read_csv("data/owid-covid-data.csv")
 
 # Filtrar por paises de interes
 countries <- c("Spain", "United States", "Italy", "France", "Germany", "Canada", "Japan", "United Kingdom")
@@ -52,10 +52,10 @@ print(p)
 p_plotly <- ggplotly(p)
 
 # Guardar el 'plotly' en '.html'
-saveWidget(p_plotly, file = "GraficoTema3.html", selfcontained = TRUE)
+saveWidget(p_plotly, file = "data/GraficoTema3.html", selfcontained = TRUE)
 
 # Guardar el 'plotly' en '.pdf'
-ggsave("GraficoTema3.pdf", p, device = "pdf")
+ggsave("data/GraficoTema3.pdf", p, device = "pdf")
 
 ```
 
