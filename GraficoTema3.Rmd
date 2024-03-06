@@ -56,5 +56,6 @@ saveWidget(p_plotly, file = "GraficoTema3.html", selfcontained = TRUE)
 
 # Guardar el 'plotly' en '.pdf'
 ggsave("GraficoTema3.pdf", p, device = "pdf")
+
 ```
 
