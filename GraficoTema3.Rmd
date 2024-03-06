@@ -1,0 +1,60 @@
+---
+title: "GraficoTema3"
+author: "Pablo Quesada
+         Julia Riol
+         Narcis Casian
+         Adrian Yuste"
+date: "2024-03-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Cargar todas las librerias que vamos a usar
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(plotly)
+library(htmlwidgets)
+
+# Cargar con 'readr' el archivo 'csv'
+df <- read_csv("owid-covid-data.csv")
+
+# Filtrar por paises de interes
+countries <- c("Spain", "United States", "Italy", "France", "Germany", "Canada", "Japan", "United Kingdom")
+df <- df %>% filter(location %in% countries & !is.na(new_deaths_smoothed_per_million))
+
+# Representar la grafica 
+p <- ggplot(df, aes(x = date, y = new_deaths_smoothed_per_million, group = location, color = location)) +
+  geom_line() +
+  scale_color_manual(values = c("Spain" = "red", "United States" = "blue", "Italy" = "green", 
+                                "France" = "purple", "Germany" = "orange", "Canada" = "pink", 
+                                "Japan" = "brown", "United Kingdom" = "cyan")) +
+  theme_minimal() +
+  labs(title = "Grupo D. Daily new confirmed COVID-19 deaths per million people",
+       subtitle = "7-day rolling average. For some countries the number of confirmed deaths is much lower than the true number of deaths. This is because of limited testing and challenges in the attribution of the cause of death.",
+       x = "", y = "") +
+  theme(legend.title = element_blank(), 
+        legend.position = "bottom",
+        plot.title = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 10))
+
+# Hacer que el trazo de España se dibuje con un trazo grueso
+p <- p + geom_line(data = df %>% filter(location == "Spain"), aes(x = date, y = new_deaths_smoothed_per_million), color = "red", size = 1.5)
+
+# Mostrar la grafica
+print(p)
+
+# Convertir 'ggplot' a 'plotly'
+p_plotly <- ggplotly(p)
+
+# Guardar el 'plotly' en '.html'
+saveWidget(p_plotly, file = "GraficoTema3.html", selfcontained = TRUE)
+
+# Guardar el 'plotly' en '.pdf'
+ggsave("GraficoTema3.pdf", p, device = "pdf")
+```
+
