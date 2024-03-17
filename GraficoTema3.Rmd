@@ -20,6 +20,9 @@ library(dplyr)
 library(plotly)
 library(htmlwidgets)
 
+url <- "https://covid.ourworldindata.org/data/owid-covid-data.csv"
+destfile <- "data/owid-covid-data.csv"
+download.file(url, destfile)
 # Cargar con 'readr' el archivo 'csv'
 df <- read_csv("data/owid-covid-data.csv")
 
